@@ -1,0 +1,7 @@
+{
+    "require": {
+        "vlucas/bulletphp": "*",
+        "illuminate/database": "*"
+    }
+}
+
