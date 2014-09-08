@@ -17,8 +17,12 @@ end
 
 # composer install
 execute 'composer-install' do
-  command "curl -sS https://getcomposer.org/installer | php; 
-           mv composer.phar /usr/local/bin/composer;
-           cd /usr/share/nginx/html;
-           composer install"
+  command "curl -sS https://getcomposer.org/installer | php; mv composer.phar /usr/local/bin/composer;"
+  not_if 'test -e /usr/local/bin/composer'
 end
+
+execute 'composer-install-pkg' do
+  command "cd /usr/share/nginx/html; composer install;"
+  not_if { File.exists?('/vagrant/html/vendor') }
+end
+
