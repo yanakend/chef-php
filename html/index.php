@@ -1,6 +1,8 @@
 <?php
 
 require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/xhprof.php';
+
 
 $app = new Bullet\App();
 $app->path('v1', function ($request) use ($app) {
