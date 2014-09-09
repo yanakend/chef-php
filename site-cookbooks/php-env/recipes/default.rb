@@ -22,7 +22,7 @@ execute 'composer-install' do
 end
 
 execute 'composer-install-pkg' do
-  command "cd /usr/share/nginx/html; composer install;"
+  command "cd /vagrant/html; composer install;"
   not_if { File.exists?('/vagrant/html/vendor') }
 end
 
