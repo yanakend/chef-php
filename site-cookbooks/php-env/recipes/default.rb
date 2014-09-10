@@ -8,7 +8,18 @@
 #
 include_recipe 'yum-remi'
 
-%w{php php-devel php-mbstring php-mcrypt php-mysqlnd php-common php-phpunit-PHPUnit php-pecl-xdebug xhprof}.each do |pkg|
+%w{
+  php 
+  php-devel
+  php-mbstring
+  php-mcrypt
+  php-mysqlnd
+  php-common
+  php-phpunit-PHPUnit
+  php-pecl-xdebug
+  xhprof
+  php-pecl-memcached
+}.each do |pkg|
   package pkg do
     action :install
     options '--enablerepo=remi-php55'
