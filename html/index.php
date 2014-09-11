@@ -1,6 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
 require 'vendor/autoload.php';
 require 'xhprof.php';
 require 'database.php';
@@ -12,23 +11,22 @@ class Product extends Illuminate\Database\Eloquent\Model {
 }
 
 // routing
-$app = new Bullet\App();
-$app->path('v1', function ($req) use ($app) {
-    $app->path('peopleApi', function () use ($app) {
-        $app->get(function() use ($app) {
-            $products = Product::all();
-            return $products->toArray();
-        });
-        $app->post(function() use ($app) {
-            return '[json-data]';
-        });
-        $app->delete(function() use ($app) {
-            return '[json-data]';
-        });
-        $app->put(function() use ($app) {
-            return '[json-data]';
-        });
-    });
+$app = new \Slim\Slim([
+    'mode' => 'development',
+]);
+
+$app->get('/peopleApi', function () use ($app) {
+    $products = Product::all();
+    echo $products->toJson();
 });
 
-echo $app->run(new Bullet\Request());
+$app->get('/peopleApi/:id', function ($id) use ($app) {
+    $products = Product::find($id);
+    echo $products->toJson();
+});
+
+$app->notFound(function () use ($app) {
+    echo '404 Not Found.';
+});
+
+$app->run();
