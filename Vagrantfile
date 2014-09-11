@@ -105,6 +105,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       recipe[php-env]
       recipe[php-fpm]
       recipe[mysql]
+      recipe[memcached]
     }
   end
 
