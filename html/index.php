@@ -21,8 +21,18 @@ $app->get('/peopleApi', function () use ($app) {
 });
 
 $app->get('/peopleApi/:id', function ($id) use ($app) {
-    $products = Product::find($id);
-    echo $products->toJson();
+    $body = MemcacheManage::get("/peopleApi/{$id}");
+    if ( ! $body)
+    {
+        $products = Product::find($id);
+        if (!$products) $body = '{}';
+        else            $body = $products->toJson();
+        MemcacheManage::set("/peopleApi/{$id}", $body);
+    }
+    $response = $app->response();
+    $response['Content-Type'] = 'application/json';
+    $response->status(200);
+    $response->body($body);
 });
 
 $app->notFound(function () use ($app) {
