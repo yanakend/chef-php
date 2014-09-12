@@ -1,7 +1,7 @@
 BEGIN;
 
 use test;
-CREATE TABLE IF NOT EXISTS `people` (
+CREATE TABLE IF NOT EXISTS `peoples` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
