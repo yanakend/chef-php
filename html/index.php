@@ -6,7 +6,7 @@ require 'database.php';
 require 'memcache.php';
 
 // create model for Eloquent ORM mapped to REST API resource
-class Product extends Illuminate\Database\Eloquent\Model {
+class People extends Illuminate\Database\Eloquent\Model {
   public $timestamps = false;
 }
 
@@ -22,7 +22,7 @@ $app->response->headers->set('Content-Type', 'application/json');
 $app->group('/api', function () use ($app) {
 
     $app->get('/people', function () use ($app) {
-        $products = Product::all();
+        $products = People::all();
         $app->response->status(200);
         $app->response->body($products->toJson());
     });
@@ -31,7 +31,7 @@ $app->group('/api', function () use ($app) {
         $body = MemcacheManage::get("/peopleApi/{$id}");
         if ( ! $body)
         {
-            $products = Product::find($id);
+            $products = People::find($id);
             if (!$products) $body = '{}';
             else            $body = $products->toJson();
             MemcacheManage::set("/peopleApi/{$id}", $body);

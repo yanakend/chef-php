@@ -31,3 +31,9 @@ template "my.cnf" do
   mode "0644"
   notifies :restart, "service[mysqld]"
 end
+
+execute "import data" do
+  command "mysql -uroot -proot < /vagrant/site-cookbooks/mysql/templates/default/import_data.sql"
+  not_if "mysql -uroot -proot test -e 'desc people;'"
+end
+
