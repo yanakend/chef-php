@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `peoples` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `people` (`id`, `name`, `email`) VALUES
+INSERT INTO `peoples` (`id`, `name`, `email`) VALUES
 (1, 'Garden spade', 'test1@test.com'),
 (2, 'Cotton hammock', 'test2@test.com'),
 (3, 'Single airbed', 'test3@test.com');
