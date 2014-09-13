@@ -22,19 +22,26 @@ $app->response->headers->set('Content-Type', 'application/json');
 $app->group('/api', function () use ($app) {
 
   $app->get('/people', function () use ($app) {
-    $products = People::all();
+    $key = "/api/people";
+    $body = MemcacheManage::get($key);
+    if (!$body) {
+      $people = People::all();
+      if (!$people) $body = '{}';
+      else          $body = $people->toJson();
+      MemcacheManage::set($key, $body);
+    }
     $app->response->status(200);
-    $app->response->body($products->toJson());
+    $app->response->body($body);
   });
 
   $app->get('/people/:id', function ($id) use ($app) {
-    $body = MemcacheManage::get("/peopleApi/{$id}");
-    if ( ! $body)
-    {
-      $products = People::find($id);
-      if (!$products) $body = '{}';
-      else            $body = $products->toJson();
-      MemcacheManage::set("/peopleApi/{$id}", $body);
+    $key = "/api/people/{$id}";
+    $body = MemcacheManage::get($key);
+    if (!$body) {
+      $people = People::find($id);
+      if (!$people) $body = '{}';
+      else          $body = $people->toJson();
+      MemcacheManage::set($key, $body);
     }
     $app->response->status(200);
     $app->response->body($body);
